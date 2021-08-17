@@ -1,11 +1,9 @@
 package eu.kevin.api
 
 import io.ktor.client.*
-
-sealed class Authorization {
-    data class Default(val clientId: String, val clientSecret: String): Authorization()
-    data class PointOfSale(val linkId: String): Authorization()
-}
+import io.ktor.client.features.*
+import io.ktor.client.request.*
+import io.ktor.http.*
 
 class Client internal constructor(
     private val authorization: Authorization,
@@ -27,4 +25,22 @@ class Client internal constructor(
         authorization = authorization,
         version = EndpointVersion.V03,
     )
+
+    internal val client = httpClient.config {
+        defaultRequest {
+            url.takeFrom(URLBuilder().takeFrom("${Endpoint.Base}${version.path}").apply {
+                encodedPath += url.encodedPath
+            })
+            when (authorization) {
+                is Authorization.Default -> {
+                    header("Client-Id", authorization.clientId)
+                    header("Client-Secret", authorization.clientSecret)
+                }
+                is Authorization.PointOfSale -> {
+                    header("Link-Id", authorization.linkId)
+                }
+            }
+        }
+    }
+
 }

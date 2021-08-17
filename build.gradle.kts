@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version Versions.Kotlin
+    kotlin("plugin.serialization") version Versions.Kotlin
     id("org.jlleitschuh.gradle.ktlint") version Versions.KtLint
 }
 
@@ -14,6 +15,14 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:${Versions.Ktor}")
     implementation("io.ktor:ktor-client-cio:${Versions.Ktor}")
+    implementation("io.ktor:ktor-client-serialization:${Versions.Ktor}")
+
+    testImplementation(kotlin("test"))
+    testImplementation("io.ktor:ktor-client-mock:${Versions.Ktor}")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 configureCodeStyleRules()

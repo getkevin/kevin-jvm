@@ -1,6 +1,6 @@
 package eu.kevin.api
 
-enum class EndpointVersion(path: String) {
+enum class EndpointVersion(val path: String) {
     V01("/v0.1"),
     V02("/v0.2"),
     V03("/v0.3")
