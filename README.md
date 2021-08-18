@@ -24,5 +24,5 @@ Email: help@kevin.eu
 
 ## License
 
-- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+- **[MIT license](LICENSE.md)**
 - Copyright© 2021 <a href="https://www.getkevin.eu/" target="_blank">kevin.</a>
