@@ -1,7 +1,7 @@
 plugins {
-    kotlin("jvm") version Versions.Kotlin
-    kotlin("plugin.serialization") version Versions.Kotlin
-    id("org.jlleitschuh.gradle.ktlint") version Versions.KtLint
+    kotlin("jvm") version Versions.KOTLIN
+    kotlin("plugin.serialization") version Versions.KOTLIN
+    id("org.jlleitschuh.gradle.ktlint") version Versions.KTLINT
 }
 
 group = "eu.kevin.api"
@@ -13,12 +13,12 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("io.ktor:ktor-client-core:${Versions.Ktor}")
-    implementation("io.ktor:ktor-client-cio:${Versions.Ktor}")
-    implementation("io.ktor:ktor-client-serialization:${Versions.Ktor}")
+    implementation("io.ktor:ktor-client-core:${Versions.KTOR}")
+    implementation("io.ktor:ktor-client-cio:${Versions.KTOR}")
+    implementation("io.ktor:ktor-client-serialization:${Versions.KTOR}")
 
     testImplementation(kotlin("test"))
-    testImplementation("io.ktor:ktor-client-mock:${Versions.Ktor}")
+    testImplementation("io.ktor:ktor-client-mock:${Versions.KTOR}")
 }
 
 tasks.test {

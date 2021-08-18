@@ -7,9 +7,9 @@ enum class EndpointVersion(val path: String) {
 }
 
 internal object Endpoint {
-    const val Base = "https://api.getkevin.eu/platform"
+    const val BASE = "https://api.getkevin.eu/platform"
 
     object Path {
-        const val InitiatePayment = "/pis/payment"
+        const val INITIATE_PAYMENT = "/pis/payment"
     }
 }

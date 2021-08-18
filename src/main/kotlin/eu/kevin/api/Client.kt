@@ -28,7 +28,7 @@ class Client internal constructor(
 
     internal val client = httpClient.config {
         defaultRequest {
-            url.takeFrom(URLBuilder().takeFrom("${Endpoint.Base}${version.path}").apply {
+            url.takeFrom(URLBuilder().takeFrom("${Endpoint.BASE}${version.path}").apply {
                 encodedPath += url.encodedPath
             })
             when (authorization) {
@@ -42,5 +42,4 @@ class Client internal constructor(
             }
         }
     }
-
 }
