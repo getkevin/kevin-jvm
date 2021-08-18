@@ -1,5 +1,7 @@
 package eu.kevin.api
 
+import eu.kevin.api.models.Authorization
+import eu.kevin.api.models.EndpointVersion
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
