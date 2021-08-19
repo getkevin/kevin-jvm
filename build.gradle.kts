@@ -1,6 +1,7 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("jvm") version Versions.KOTLIN
-    kotlin("plugin.serialization") version Versions.KOTLIN
     id("org.jlleitschuh.gradle.ktlint") version Versions.KTLINT
 }
 
@@ -15,10 +16,17 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("io.ktor:ktor-client-core:${Versions.KTOR}")
     implementation("io.ktor:ktor-client-cio:${Versions.KTOR}")
-    implementation("io.ktor:ktor-client-serialization:${Versions.KTOR}")
+    implementation("com.squareup.moshi:moshi:${Versions.MOSHI}")
+    implementation("com.squareup.moshi:moshi-kotlin:${Versions.MOSHI}")
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-client-mock:${Versions.KTOR}")
+}
+
+val compileKotlin: KotlinCompile by tasks
+
+compileKotlin.kotlinOptions {
+    jvmTarget = "1.8"
 }
 
 tasks.test {
