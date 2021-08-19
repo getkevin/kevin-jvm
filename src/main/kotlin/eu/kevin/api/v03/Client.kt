@@ -21,7 +21,7 @@ class Client internal constructor(
                 parameter("paymentMethodPreferred", paymentMethodPreferred?.title)
 
                 headers {
-                    accessToken?.let { append(HttpHeaders.Authorization, it) }
+                    accessToken?.let { append(HttpHeaders.Authorization, "Bearer $it") }
                     append("Redirect-URL", redirectUrl)
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
