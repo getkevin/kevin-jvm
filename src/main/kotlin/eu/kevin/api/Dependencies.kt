@@ -1,22 +1,35 @@
 package eu.kevin.api
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import eu.kevin.api.models.exception.KevinApiClientErrorException
-import eu.kevin.api.serialization.BigDecimalAdapter
-import eu.kevin.api.serialization.LocalDateAdapter
+import eu.kevin.api.serialization.BigDecimalSerializer
+import eu.kevin.api.serialization.LocalDateSerializer
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
+import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import java.math.BigDecimal
+import java.time.LocalDate
 
 internal object Dependencies {
     val httpClient by lazy {
         HttpClient(CIO) {
+            install(JsonFeature) {
+                serializer = KotlinxSerializer(Dependencies.serializer)
+            }
             defaultRequest {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
+                url.takeFrom(
+                    URLBuilder().takeFrom("${Endpoint.BASE}${Endpoint.VERSION}").apply {
+                        encodedPath += url.encodedPath
+                    }
+                )
             }
             HttpResponseValidator {
                 handleResponseException { exception ->
@@ -25,7 +38,7 @@ internal object Dependencies {
                             when (exception.response.status) {
                                 HttpStatusCode.BadRequest -> {
                                     throw KevinApiClientErrorException(
-                                        response = serializer.deserialize(exception.response.readText())
+                                        response = serializer.decodeFromString(exception.response.readText())
                                     )
                                 }
                             }
@@ -35,14 +48,14 @@ internal object Dependencies {
             }
         }
     }
-    val serializer by lazy {
-        Serializer(moshi = moshi)
-    }
-    private val moshi: Moshi by lazy {
-        Moshi.Builder()
-            .add(LocalDateAdapter)
-            .add(BigDecimalAdapter)
-            .addLast(KotlinJsonAdapterFactory())
-            .build()
+    private val serializer: Json by lazy {
+        Json {
+            serializersModule = SerializersModule {
+                contextual(LocalDate::class, LocalDateSerializer)
+                contextual(BigDecimal::class, BigDecimalSerializer)
+            }
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
     }
 }
