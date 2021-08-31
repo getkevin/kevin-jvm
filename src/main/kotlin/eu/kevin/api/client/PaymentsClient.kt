@@ -1,18 +1,17 @@
 package eu.kevin.api.client
 
 import eu.kevin.api.Endpoint
-import eu.kevin.api.models.Authorization
 import eu.kevin.api.payments.initiatePayment.request.InitiatePaymentRequest
 import eu.kevin.api.payments.initiatePayment.response.InitiatePaymentResponse
+import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class PaymentsClient(
-    authorization: Authorization
-) : BaseClient(authorization) {
-
+class PaymentsClient internal constructor(
+    private val httpClient: HttpClient
+) {
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
-        client.post(
+        httpClient.post(
             path = Endpoint.Path.INITIATE_PAYMENT,
             body = request.paymentData
         ) {

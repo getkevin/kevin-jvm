@@ -4,9 +4,10 @@ plugins {
     kotlin("jvm") version Versions.KOTLIN
     kotlin("plugin.serialization") version Versions.KOTLIN
     id("org.jlleitschuh.gradle.ktlint") version Versions.KTLINT
+    `maven-publish`
 }
 
-group = "eu.kevin.api"
+group = "eu.kevin"
 version = "0.1.0"
 
 repositories {
@@ -45,4 +46,15 @@ fun Project.configureCodeStyleRules() = configure<org.jlleitschuh.gradle.ktlint.
             "final-newline"
         )
     )
+}
+
+configure<PublishingExtension> {
+    publications {
+        create<MavenPublication>("kotlin") {
+            from(components["kotlin"])
+            groupId = project.group.toString()
+            artifactId = project.name
+            version = project.version.toString()
+        }
+    }
 }

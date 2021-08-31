@@ -25,11 +25,6 @@ internal object Dependencies {
             }
             defaultRequest {
                 header(HttpHeaders.ContentType, ContentType.Application.Json)
-                url.takeFrom(
-                    URLBuilder().takeFrom("${Endpoint.BASE}${Endpoint.VERSION}").apply {
-                        encodedPath += url.encodedPath
-                    }
-                )
             }
             HttpResponseValidator {
                 handleResponseException { exception ->
