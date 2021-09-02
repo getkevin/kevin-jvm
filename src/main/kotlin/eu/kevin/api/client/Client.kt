@@ -11,7 +11,7 @@ import io.ktor.http.*
 class Client internal constructor(
     private val authorization: Authorization,
     private val apiUrl: String,
-    private val httpClient: HttpClient,
+    private val httpClient: HttpClient
 ) {
     val paymentsClient by lazy {
         PaymentsClient(
@@ -22,7 +22,7 @@ class Client internal constructor(
     constructor(authorization: Authorization, apiUrl: String) : this(
         authorization = authorization,
         apiUrl = apiUrl,
-        httpClient = Dependencies.httpClient,
+        httpClient = Dependencies.httpClient
     )
 
     constructor(authorization: Authorization) : this(
