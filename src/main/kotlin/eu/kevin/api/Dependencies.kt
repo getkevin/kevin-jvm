@@ -29,14 +29,14 @@ internal object Dependencies {
             HttpResponseValidator {
                 handleResponseException { exception ->
                     when (exception) {
-                        is ClientRequestException -> {
-                            when (exception.response.status) {
-                                HttpStatusCode.BadRequest -> {
-                                    throw KevinApiClientErrorException(
-                                        response = serializer.decodeFromString(exception.response.readText())
-                                    )
-                                }
-                            }
+                        is ResponseException -> {
+                            val status = exception.response.status
+                            throw KevinApiClientErrorException(
+                                responseStatusCode = status.value,
+                                responseBody = if (status == HttpStatusCode.BadRequest)
+                                    serializer.decodeFromString(exception.response.readText())
+                                else null
+                            )
                         }
                     }
                 }
