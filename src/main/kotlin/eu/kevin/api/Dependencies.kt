@@ -1,6 +1,6 @@
 package eu.kevin.api
 
-import eu.kevin.api.models.exception.KevinApiClientErrorException
+import eu.kevin.api.models.exception.KevinApiErrorException
 import eu.kevin.api.serialization.BigDecimalSerializer
 import eu.kevin.api.serialization.LocalDateSerializer
 import io.ktor.client.*
@@ -31,7 +31,7 @@ internal object Dependencies {
                     when (exception) {
                         is ResponseException -> {
                             val status = exception.response.status
-                            throw KevinApiClientErrorException(
+                            throw KevinApiErrorException(
                                 responseStatusCode = status.value,
                                 responseBody = if (status == HttpStatusCode.BadRequest)
                                     serializer.decodeFromString(exception.response.readText())
