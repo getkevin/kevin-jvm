@@ -1,5 +1,6 @@
 package eu.kevin.api.models.payment.initiatePayment.response
 
+import eu.kevin.api.models.payment.StatusGroup
 import kotlinx.serialization.Serializable
 
 @Serializable

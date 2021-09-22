@@ -1,4 +1,4 @@
-package eu.kevin.api.models.exception
+package eu.kevin.api.exceptions
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement

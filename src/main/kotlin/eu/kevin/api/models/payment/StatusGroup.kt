@@ -1,4 +1,4 @@
-package eu.kevin.api.models.payment.initiatePayment.response
+package eu.kevin.api.models.payment
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

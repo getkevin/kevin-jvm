@@ -6,5 +6,6 @@ internal object Endpoint {
 
     object Path {
         const val INITIATE_PAYMENT = "/pis/payment"
+        fun initiatePaymentRefund(paymentId: String) = "/pis/payment/$paymentId/refunds"
     }
 }
