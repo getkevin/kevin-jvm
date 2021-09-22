@@ -8,11 +8,11 @@ import kotlinx.serialization.UseSerializers
 import java.math.BigDecimal
 
 @Serializable
-data class InitiatePaymentRequestBody @JvmOverloads constructor(
+internal data class InitiatePaymentRequestBody(
     val amount: BigDecimal,
     val currencyCode: String,
     val description: String,
-    var bankPaymentMethod: BankPaymentMethod,
-    var cardPaymentMethod: CardPaymentMethod? = null,
-    var identifier: UserIdentifier? = null
+    val bankPaymentMethod: BankPaymentMethod,
+    val cardPaymentMethod: CardPaymentMethod?,
+    val identifier: UserIdentifier?
 )

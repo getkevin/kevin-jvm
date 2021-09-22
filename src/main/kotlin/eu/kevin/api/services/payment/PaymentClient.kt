@@ -2,6 +2,7 @@ package eu.kevin.api.services.payment
 
 import eu.kevin.api.Endpoint
 import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequest
+import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequestBody
 import eu.kevin.api.models.payment.initiatePayment.response.InitiatePaymentResponse
 import eu.kevin.api.models.payment.initiatePaymentRefund.InitiatePaymentRefundRequest
 import eu.kevin.api.models.payment.initiatePaymentRefund.InitiatePaymentRefundRequestBody
@@ -16,7 +17,14 @@ class PaymentClient internal constructor(
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
         httpClient.post(
             path = Endpoint.Path.INITIATE_PAYMENT,
-            body = request.paymentData
+            body = InitiatePaymentRequestBody(
+                amount = request.amount,
+                currencyCode = request.currencyCode,
+                description = request.description,
+                bankPaymentMethod = request.bankPaymentMethod,
+                cardPaymentMethod = request.cardPaymentMethod,
+                identifier = request.identifier
+            )
         ) {
             request.run {
                 parameter("bankId", bankId)
