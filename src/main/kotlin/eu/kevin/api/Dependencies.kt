@@ -1,8 +1,8 @@
 package eu.kevin.api
 
 import eu.kevin.api.models.exception.KevinApiErrorException
-import eu.kevin.api.serialization.BigDecimalSerializer
-import eu.kevin.api.serialization.LocalDateSerializer
+import eu.kevin.api.serializers.BigDecimalSerializer
+import eu.kevin.api.serializers.LocalDateSerializer
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*

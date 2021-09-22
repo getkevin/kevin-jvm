@@ -1,8 +1,8 @@
 @file:UseSerializers(BigDecimalSerializer::class)
 
-package eu.kevin.api.payments.initiatePayment.request
+package eu.kevin.api.models.payment.initiatePayment.request
 
-import eu.kevin.api.serialization.BigDecimalSerializer
+import eu.kevin.api.serializers.BigDecimalSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import java.math.BigDecimal

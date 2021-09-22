@@ -1,7 +1,7 @@
-package eu.kevin.api.parser
+package eu.kevin.api.services
 
 import eu.kevin.api.Dependencies
-import eu.kevin.api.payments.webhook.WebhookPayload
+import eu.kevin.api.models.payment.webhook.WebhookPayload
 import kotlinx.serialization.json.Json
 
 class Parser internal constructor(

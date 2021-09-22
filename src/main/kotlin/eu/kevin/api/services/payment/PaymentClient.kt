@@ -1,13 +1,13 @@
-package eu.kevin.api.client
+package eu.kevin.api.services.payment
 
 import eu.kevin.api.Endpoint
-import eu.kevin.api.payments.initiatePayment.request.InitiatePaymentRequest
-import eu.kevin.api.payments.initiatePayment.response.InitiatePaymentResponse
+import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequest
+import eu.kevin.api.models.payment.initiatePayment.response.InitiatePaymentResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
-class PaymentsClient internal constructor(
+class PaymentClient internal constructor(
     private val httpClient: HttpClient
 ) {
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =

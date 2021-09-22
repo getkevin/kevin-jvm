@@ -1,4 +1,4 @@
-package eu.kevin.api.serialization
+package eu.kevin.api.serializers
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
