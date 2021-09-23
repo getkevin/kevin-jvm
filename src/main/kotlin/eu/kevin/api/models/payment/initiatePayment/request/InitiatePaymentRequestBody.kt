@@ -12,7 +12,7 @@ internal data class InitiatePaymentRequestBody(
     val amount: BigDecimal,
     val currencyCode: String,
     val description: String,
-    val bankPaymentMethod: BankPaymentMethod,
-    val cardPaymentMethod: CardPaymentMethod?,
-    val identifier: UserIdentifier?
+    val bankPaymentMethod: BankPaymentMethod? = null,
+    val cardPaymentMethod: CardPaymentMethod? = null,
+    val identifier: UserIdentifier? = null
 )

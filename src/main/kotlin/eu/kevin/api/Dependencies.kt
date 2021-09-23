@@ -54,6 +54,11 @@ internal object Dependencies {
             }
             ignoreUnknownKeys = true
             isLenient = true
+
+            // use explicitNulls=false flag instead when kotlinx.serialization 1.3 becomes stable
+            // to skip serialization of properties with null values
+            // https://github.com/Kotlin/kotlinx.serialization/commit/2048fac0cae7f798abc1f2a1cf22a877e9f66430
+            encodeDefaults = false
         }
     }
 }
