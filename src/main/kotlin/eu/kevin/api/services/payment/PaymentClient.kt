@@ -16,7 +16,7 @@ class PaymentClient internal constructor(
 ) {
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
         httpClient.post(
-            path = Endpoint.Path.INITIATE_PAYMENT,
+            path = Endpoint.Path.initiatePayment(),
             body = InitiatePaymentRequestBody(
                 amount = request.amount,
                 currencyCode = request.currencyCode,
