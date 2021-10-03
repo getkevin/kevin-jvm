@@ -3,6 +3,7 @@ package eu.kevin.api.services
 import eu.kevin.api.Dependencies
 import eu.kevin.api.Endpoint
 import eu.kevin.api.models.Authorization
+import eu.kevin.api.services.auth.AuthClient
 import eu.kevin.api.services.payment.PaymentClient
 import io.ktor.client.*
 import io.ktor.client.features.*
@@ -14,11 +15,8 @@ class Client internal constructor(
     private val apiUrl: String,
     private val httpClient: HttpClient
 ) {
-    val paymentClient by lazy {
-        PaymentClient(
-            httpClient = httpClient.withAuthorization()
-        )
-    }
+    val paymentClient by lazy { PaymentClient(httpClient = httpClient.withAuthorization()) }
+    val authClient by lazy { AuthClient(httpClient = httpClient.withAuthorization()) }
 
     constructor(authorization: Authorization, apiUrl: String) : this(
         authorization = authorization,

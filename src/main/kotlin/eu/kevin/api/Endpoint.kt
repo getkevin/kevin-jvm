@@ -7,5 +7,8 @@ internal object Endpoint {
     object Path {
         fun initiatePayment() = "/pis/payment"
         fun initiatePaymentRefund(paymentId: String) = "/pis/payment/$paymentId/refunds"
+        fun startAuthentication() = "/auth"
+        fun receiveToken() = "/auth/token"
+        fun receiveTokenContent() = "/auth/token/content"
     }
 }
