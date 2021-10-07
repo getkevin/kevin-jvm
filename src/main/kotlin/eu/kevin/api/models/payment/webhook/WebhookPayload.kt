@@ -1,7 +1,7 @@
 package eu.kevin.api.models.payment.webhook
 
 import eu.kevin.api.models.payment.StatusGroup
-import eu.kevin.api.models.payment.initiatePayment.response.BankStatus
+import eu.kevin.api.models.payment.BankStatus
 import kotlinx.serialization.Serializable
 
 @Serializable
