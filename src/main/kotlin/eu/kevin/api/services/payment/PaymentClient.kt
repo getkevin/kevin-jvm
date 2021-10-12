@@ -1,6 +1,8 @@
 package eu.kevin.api.services.payment
 
 import eu.kevin.api.Endpoint
+import eu.kevin.api.models.payment.getPaymentStatus.GetPaymentStatusRequest
+import eu.kevin.api.models.payment.getPaymentStatus.GetPaymentStatusResponse
 import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequest
 import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequestBody
 import eu.kevin.api.models.payment.initiatePayment.response.InitiatePaymentResponse
@@ -35,6 +37,17 @@ class PaymentClient internal constructor(
                     accessToken?.let { append(HttpHeaders.Authorization, "Bearer $it") }
                     append("Redirect-URL", redirectUrl)
                     webhookUrl?.let { append("Webhook-URL", it) }
+                }
+            }
+        }
+
+    suspend fun getPaymentStatus(request: GetPaymentStatusRequest): GetPaymentStatusResponse =
+        httpClient.get(
+            path = Endpoint.Path.getPaymentStatus(paymentId = request.paymentId)
+        ) {
+            request.run {
+                headers {
+                    accessToken?.let { append(HttpHeaders.Authorization, "Bearer $it") }
                 }
             }
         }
