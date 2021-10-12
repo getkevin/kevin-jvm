@@ -1,13 +1,12 @@
-package eu.kevin.api.models.payment.webhook
+package eu.kevin.api.models.payment.initiatePaymentRefund.webhook
 
-import eu.kevin.api.models.payment.BankStatus
 import eu.kevin.api.models.payment.StatusGroup
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class WebhookPayload(
+data class PaymentRefundWebhookPayload(
     val id: String,
-    val bankStatus: BankStatus,
+    val paymentId: String,
     val statusGroup: StatusGroup,
     val type: String
 )
