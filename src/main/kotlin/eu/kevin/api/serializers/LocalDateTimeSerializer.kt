@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter
 @OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = LocalDateTime::class)
 object LocalDateTimeSerializer : KSerializer<LocalDateTime> {
-    private val format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+    private val format = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 
     override fun serialize(encoder: Encoder, value: LocalDateTime) {
         encoder.encodeString(value.format(format))
