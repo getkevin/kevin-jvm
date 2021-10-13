@@ -18,7 +18,7 @@ class AuthClient internal constructor(
 ) {
     suspend fun startAuthentication(request: StartAuthenticationRequest): StartAuthenticationResponse =
         httpClient.post(
-            path = Endpoint.Path.startAuthentication(),
+            path = Endpoint.Path.Auth.startAuthentication(),
             body = StartAuthenticationRequestBody(
                 email = request.email,
                 cardMethod = request.cardMethod
@@ -40,19 +40,19 @@ class AuthClient internal constructor(
 
     suspend fun receiveToken(request: ReceiveTokenRequest): ReceiveTokenResponse =
         httpClient.post(
-            path = Endpoint.Path.receiveToken(),
+            path = Endpoint.Path.Auth.receiveToken(),
             body = request
         )
 
     suspend fun refreshToken(request: RefreshTokenRequest): ReceiveTokenResponse =
         httpClient.post(
-            path = Endpoint.Path.receiveToken(),
+            path = Endpoint.Path.Auth.receiveToken(),
             body = request
         )
 
     suspend fun receiveTokenContent(request: ReceiveTokenContentRequest): ReceiveTokenContentResponse =
         httpClient.get(
-            path = Endpoint.Path.receiveTokenContent()
+            path = Endpoint.Path.Auth.receiveTokenContent()
         ) {
             headers {
                 append(HttpHeaders.Authorization, "Bearer ${request.accessToken}")

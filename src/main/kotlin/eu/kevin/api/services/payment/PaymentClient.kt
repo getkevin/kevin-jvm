@@ -18,7 +18,7 @@ class PaymentClient internal constructor(
 ) {
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
         httpClient.post(
-            path = Endpoint.Path.initiatePayment(),
+            path = Endpoint.Path.Payment.initiatePayment(),
             body = InitiatePaymentRequestBody(
                 amount = request.amount,
                 currencyCode = request.currencyCode,
@@ -43,7 +43,7 @@ class PaymentClient internal constructor(
 
     suspend fun getPaymentStatus(request: GetPaymentStatusRequest): GetPaymentStatusResponse =
         httpClient.get(
-            path = Endpoint.Path.getPaymentStatus(paymentId = request.paymentId)
+            path = Endpoint.Path.Payment.getPaymentStatus(paymentId = request.paymentId)
         ) {
             request.run {
                 headers {
@@ -54,7 +54,7 @@ class PaymentClient internal constructor(
 
     suspend fun initiatePaymentRefund(request: InitiatePaymentRefundRequest): InitiatePaymentRefundResponse =
         httpClient.post(
-            path = Endpoint.Path.initiatePaymentRefund(paymentId = request.paymentId),
+            path = Endpoint.Path.Payment.initiatePaymentRefund(paymentId = request.paymentId),
             body = InitiatePaymentRefundRequestBody(amount = request.amount)
         ) {
             request.run {
