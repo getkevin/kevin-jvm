@@ -12,34 +12,34 @@ class GeneralClient internal constructor(
 ) {
     suspend fun getSupportedCountries(): List<String> =
         httpClient.get<ResponseArray<String>>(
-            path = Endpoint.Path.General.getSupportedCountries()
+            path = Endpoint.Paths.General.getSupportedCountries()
         ).data
 
     @JvmOverloads
     suspend fun getSupportedBanks(countryCode: String? = null): List<BankResponse> =
         httpClient.get<ResponseArray<BankResponse>>(
-            path = Endpoint.Path.General.getSupportedBanks()
+            path = Endpoint.Paths.General.getSupportedBanks()
         ) {
             parameter("countryCode", countryCode)
         }.data
 
     suspend fun getSupportedBank(bankId: String): BankResponse =
         httpClient.get(
-            path = Endpoint.Path.General.getSupportedBank(bankId = bankId)
+            path = Endpoint.Paths.General.getSupportedBank(bankId = bankId)
         )
 
     suspend fun getSupportedBankByCardNumberPiece(cardNumberPiece: String): BankResponse =
         httpClient.get(
-            path = Endpoint.Path.General.getSupportedBankByCardNumberPiece(cardNumberPiece = cardNumberPiece)
+            path = Endpoint.Paths.General.getSupportedBankByCardNumberPiece(cardNumberPiece = cardNumberPiece)
         )
 
     suspend fun getPaymentMethods(): List<String> =
         httpClient.get<ResponseArray<String>>(
-            path = Endpoint.Path.General.getPaymentMethods()
+            path = Endpoint.Paths.General.getPaymentMethods()
         ).data
 
     suspend fun getProjectSettings(): GetProjectSettingsResponse =
         httpClient.get(
-            path = Endpoint.Path.General.getProjectSettings()
+            path = Endpoint.Paths.General.getProjectSettings()
         )
 }

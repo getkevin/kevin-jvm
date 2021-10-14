@@ -4,7 +4,7 @@ internal object Endpoint {
     const val BASE = "https://api.kevin.eu/platform"
     const val VERSION = "/v0.3"
 
-    object Path {
+    object Paths {
         object Payment {
             fun initiatePayment() = "/pis/payment"
             fun getPaymentStatus(paymentId: String) = "/pis/payment/$paymentId/status"
