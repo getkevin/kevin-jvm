@@ -3,7 +3,7 @@ package eu.kevin.api.services.general
 import eu.kevin.api.Endpoint
 import eu.kevin.api.models.ResponseArray
 import eu.kevin.api.models.general.bank.BankResponse
-import eu.kevin.api.models.general.getProjectSettings.GetProjectSettingsResponse
+import eu.kevin.api.models.general.projectSettings.GetProjectSettingsResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 

@@ -1,14 +1,14 @@
 package eu.kevin.api.services.auth
 
 import eu.kevin.api.Endpoint
-import eu.kevin.api.models.auth.receiveToken.request.ReceiveTokenRequest
-import eu.kevin.api.models.auth.receiveToken.request.RefreshTokenRequest
-import eu.kevin.api.models.auth.receiveToken.response.ReceiveTokenResponse
-import eu.kevin.api.models.auth.receiveTokenContent.ReceiveTokenContentRequest
-import eu.kevin.api.models.auth.receiveTokenContent.ReceiveTokenContentResponse
-import eu.kevin.api.models.auth.startAuthentication.request.StartAuthenticationRequest
-import eu.kevin.api.models.auth.startAuthentication.request.StartAuthenticationRequestBody
-import eu.kevin.api.models.auth.startAuthentication.response.StartAuthenticationResponse
+import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequest
+import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequestBody
+import eu.kevin.api.models.auth.authentication.response.StartAuthenticationResponse
+import eu.kevin.api.models.auth.token.request.ReceiveTokenRequest
+import eu.kevin.api.models.auth.token.request.RefreshTokenRequest
+import eu.kevin.api.models.auth.token.response.ReceiveTokenResponse
+import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentRequest
+import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*

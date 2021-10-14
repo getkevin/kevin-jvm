@@ -1,14 +1,14 @@
 package eu.kevin.api.services.payment
 
 import eu.kevin.api.Endpoint
-import eu.kevin.api.models.payment.getPaymentStatus.GetPaymentStatusRequest
-import eu.kevin.api.models.payment.getPaymentStatus.GetPaymentStatusResponse
-import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequest
-import eu.kevin.api.models.payment.initiatePayment.request.InitiatePaymentRequestBody
-import eu.kevin.api.models.payment.initiatePayment.response.InitiatePaymentResponse
-import eu.kevin.api.models.payment.initiatePaymentRefund.InitiatePaymentRefundRequest
-import eu.kevin.api.models.payment.initiatePaymentRefund.InitiatePaymentRefundRequestBody
-import eu.kevin.api.models.payment.initiatePaymentRefund.InitiatePaymentRefundResponse
+import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequest
+import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequestBody
+import eu.kevin.api.models.payment.payment.response.InitiatePaymentResponse
+import eu.kevin.api.models.payment.paymentStatus.GetPaymentStatusRequest
+import eu.kevin.api.models.payment.paymentStatus.GetPaymentStatusResponse
+import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequest
+import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequestBody
+import eu.kevin.api.models.payment.refund.InitiatePaymentRefundResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*

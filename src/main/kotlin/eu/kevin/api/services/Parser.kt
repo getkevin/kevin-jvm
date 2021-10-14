@@ -1,10 +1,10 @@
 package eu.kevin.api.services
 
 import eu.kevin.api.Dependencies
-import eu.kevin.api.models.payment.initiatePayment.webhook.BankPaymentWebhookPayload
-import eu.kevin.api.models.payment.initiatePayment.webhook.CardPaymentWebhookPayload
-import eu.kevin.api.models.payment.initiatePayment.webhook.HybridPaymentWebhookPayload
-import eu.kevin.api.models.payment.initiatePaymentRefund.webhook.PaymentRefundWebhookPayload
+import eu.kevin.api.models.payment.payment.webhook.BankPaymentWebhookPayload
+import eu.kevin.api.models.payment.payment.webhook.CardPaymentWebhookPayload
+import eu.kevin.api.models.payment.payment.webhook.HybridPaymentWebhookPayload
+import eu.kevin.api.models.payment.refund.webhook.PaymentRefundWebhookPayload
 import kotlinx.serialization.json.Json
 
 class Parser internal constructor(
