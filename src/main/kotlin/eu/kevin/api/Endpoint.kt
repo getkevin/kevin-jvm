@@ -23,5 +23,11 @@ internal object Endpoint {
             fun getPaymentMethods() = "/auth/paymentMethods"
             fun getProjectSettings() = "/auth/project/settings"
         }
+        object Account {
+            fun getAccountsList() = "/ais/accounts"
+            fun getAccountDetails(accountId: String) = "/ais/accounts/$accountId"
+            fun getAccountTransactions(accountId: String) = "/ais/accounts/$accountId/transactions"
+            fun getAccountBalance(accountId: String) = "/ais/accounts/$accountId/balance"
+        }
     }
 }
