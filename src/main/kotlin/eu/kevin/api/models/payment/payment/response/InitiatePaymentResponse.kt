@@ -7,11 +7,11 @@ import eu.kevin.api.models.payment.StatusGroup
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class InitiatePaymentResponse @JvmOverloads constructor(
+data class InitiatePaymentResponse(
     val id: String,
     val statusGroup: StatusGroup,
-    val confirmLink: String,
-    var cardStatus: CardStatus? = null,
-    var bankStatus: BankStatus? = null,
-    var hybridStatus: HybridStatus? = null,
+    val confirmLink: String? = null,
+    val cardStatus: CardStatus? = null,
+    val bankStatus: BankStatus? = null,
+    val hybridStatus: HybridStatus? = null
 )
