@@ -24,16 +24,14 @@ class Client internal constructor(
     val generalClient by lazy { GeneralClient(httpClient = httpClient.withAuthorization()) }
     val accountClient by lazy { AccountClient(httpClient = httpClient.withAuthorization(), serializer = serializer) }
 
-    constructor(authorization: Authorization, apiUrl: String) : this(
+    constructor(
+        authorization: Authorization,
+        apiUrl: String = Endpoint.BASE
+    ) : this(
         authorization = authorization,
         apiUrl = apiUrl,
         httpClient = Dependencies.httpClient,
         serializer = Dependencies.serializer
-    )
-
-    constructor(authorization: Authorization) : this(
-        authorization = authorization,
-        apiUrl = Endpoint.BASE
     )
 
     private fun HttpClient.withAuthorization() = this.config {
@@ -43,15 +41,8 @@ class Client internal constructor(
                     encodedPath += url.encodedPath
                 }
             )
-            when (authorization) {
-                is Authorization.Default -> {
-                    header("Client-Id", authorization.clientId)
-                    header("Client-Secret", authorization.clientSecret)
-                }
-                is Authorization.PointOfSale -> {
-                    header("Link-Id", authorization.linkId)
-                }
-            }
+            header("Client-Id", authorization.clientId)
+            header("Client-Secret", authorization.clientSecret)
         }
     }
 }

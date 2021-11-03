@@ -19,7 +19,7 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-internal object Dependencies {
+object Dependencies {
     val httpClient by lazy {
         HttpClient(CIO) {
             install(JsonFeature) {
@@ -45,7 +45,7 @@ internal object Dependencies {
             }
         }
     }
-    val serializer: Json by lazy {
+    internal val serializer: Json by lazy {
         Json {
             serializersModule = SerializersModule {
                 contextual(LocalDate::class, LocalDateSerializer)
