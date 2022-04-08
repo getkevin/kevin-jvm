@@ -1,3 +1,8 @@
+![kevin.](./images/logo.png)
+
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/eu.kevin/kevin-jvm/badge.svg)](https://maven-badges.herokuapp.com/maven-central/eu.kevin/kevin-jvm)
+[![License](https://shields.io/badge/license-MIT-blue)](https://github.com/getkevin/kevin-jvm/blob/master/LICENSE)
+
 # kevin. JVM Client
 
 JVM client implementing [kevin. platform API v0.3](https://docs.kevin.eu/public/platform/v0.3).
@@ -8,7 +13,21 @@ JVM client implementing [kevin. platform API v0.3](https://docs.kevin.eu/public/
 
 ## Installation
 
-To be updated
+Package and installation instructions are available at the [Maven Central Repository](https://maven-badges.herokuapp.com/maven-central/eu.kevin/kevin-jvm)
+
+### Maven
+```
+<dependency>
+  <groupId>eu.kevin</groupId>
+  <artifactId>kevin-jvm</artifactId>
+  <version>0.1.0</version>
+</dependency>
+```
+
+### Gradle
+```
+implementation 'eu.kevin:kevin-jvm:0.1.0'
+```
 
 ## Usage Examples
 
@@ -84,4 +103,4 @@ Email: help@kevin.eu
 ## License
 
 - **[MIT license](LICENSE.md)**
-- Copyright© 2021 <a href="https://www.kevin.eu/" target="_blank">kevin.</a>
+- Copyright© 2022 <a href="https://www.kevin.eu/" target="_blank">kevin.</a>
