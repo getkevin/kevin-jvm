@@ -5,7 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class StatusGroup {
-    @SerialName("created") CREATED,
     @SerialName("started") STARTED,
     @SerialName("pending") PENDING,
     @SerialName("completed") COMPLETED,
