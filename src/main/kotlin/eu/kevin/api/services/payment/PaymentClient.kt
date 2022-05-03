@@ -57,13 +57,7 @@ class PaymentClient internal constructor(
     suspend fun getPaymentStatus(request: GetPaymentStatusRequest): GetPaymentStatusResponse =
         httpClient.get(
             path = Endpoint.Paths.Payment.getPaymentStatus(paymentId = request.paymentId)
-        ) {
-            request.run {
-                headers {
-                    accessToken?.let { append(HttpHeaders.Authorization, "Bearer $it") }
-                }
-            }
-        }
+        )
 
     /**
      * API Method: [Initiate payment refund](https://docs.kevin.eu/public/platform/v0.3#operation/initiatePaymentRefund)
