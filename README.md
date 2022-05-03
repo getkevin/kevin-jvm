@@ -93,7 +93,7 @@ val webhookRequestBody = """
         }
     """.trimIndent()
 
-val bankWebhookPayload = parser.parseBankPaymentWebhookRequest(request = webhookRequestBody)
+val paymentWebhookPayload = parser.parsePaymentWebhookRequest(request = webhookRequestBody)
 ```
 
 ## Support
