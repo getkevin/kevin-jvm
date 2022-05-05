@@ -2,6 +2,7 @@ package eu.kevin.api.services.auth
 
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
+import eu.kevin.api.extensions.appendQueryParameter
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequest
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequestBody
 import eu.kevin.api.models.auth.authentication.response.StartAuthenticationResponse
@@ -10,7 +11,6 @@ import eu.kevin.api.models.auth.token.request.RefreshTokenRequest
 import eu.kevin.api.models.auth.token.response.ReceiveTokenResponse
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentRequest
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentResponse
-import eu.kevin.api.services.UrlUtils.appendQueryParameter
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
