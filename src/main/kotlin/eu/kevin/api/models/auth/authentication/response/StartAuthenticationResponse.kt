@@ -4,6 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class StartAuthenticationResponse(
-    var authorizationLink: String,
+    val authorizationLink: String,
     val state: String
 )

@@ -7,5 +7,6 @@ data class StartAuthenticationRequest @JvmOverloads constructor(
     var redirectPreferred: Boolean? = null,
     var scopes: List<AuthenticationScopes>? = null,
     var email: String? = null,
-    var cardMethod: CardMethod? = null
+    var cardMethod: CardMethod? = null,
+    var lang: String? = null
 )

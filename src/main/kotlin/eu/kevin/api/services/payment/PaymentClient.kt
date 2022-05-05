@@ -10,10 +10,10 @@ import eu.kevin.api.models.payment.paymentStatus.GetPaymentStatusResponse
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequest
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequestBody
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundResponse
+import eu.kevin.api.services.UrlUtils.appendQueryParameter
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlin.jvm.Throws
 
 /**
  * Implements API Methods of the [Payment initiation service](https://docs.kevin.eu/public/platform/v0.3#tag/Payment-Initiation-Service)
@@ -26,7 +26,7 @@ class PaymentClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
-        httpClient.post(
+        httpClient.post<InitiatePaymentResponse>(
             path = Endpoint.Paths.Payment.initiatePayment(),
             body = InitiatePaymentRequestBody(
                 amount = request.amount,
@@ -48,6 +48,12 @@ class PaymentClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
+        }.run {
+            copy(
+                confirmLink = confirmLink?.let {
+                    Url(it).appendQueryParameter("lang", request.lang).toString()
+                }
+            )
         }
 
     /**

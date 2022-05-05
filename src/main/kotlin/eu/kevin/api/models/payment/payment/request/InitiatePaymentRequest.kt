@@ -15,4 +15,5 @@ data class InitiatePaymentRequest @JvmOverloads constructor(
     var redirectPreferred: Boolean? = null,
     var paymentMethodPreferred: PaymentMethod? = null,
     var webhookUrl: String? = null,
+    var lang: String? = null
 )

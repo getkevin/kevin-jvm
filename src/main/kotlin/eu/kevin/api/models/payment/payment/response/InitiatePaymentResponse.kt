@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class InitiatePaymentResponse(
     val id: String,
     val statusGroup: StatusGroup,
-    var confirmLink: String? = null,
+    val confirmLink: String? = null,
     val cardStatus: CardStatus? = null,
     val bankStatus: BankStatus? = null,
     val hybridStatus: HybridStatus? = null
