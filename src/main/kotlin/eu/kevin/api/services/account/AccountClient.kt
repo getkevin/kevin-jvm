@@ -15,7 +15,6 @@ import eu.kevin.api.serializers.LocalDateSerializer
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
-import kotlin.jvm.Throws
 
 /**
  * Implements API Methods of the [Account information service](https://docs.kevin.eu/public/platform/v0.3#tag/Account-Information-Service)

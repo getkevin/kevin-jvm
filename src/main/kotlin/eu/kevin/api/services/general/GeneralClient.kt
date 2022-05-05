@@ -7,7 +7,6 @@ import eu.kevin.api.models.general.bank.BankResponse
 import eu.kevin.api.models.general.projectSettings.GetProjectSettingsResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
-import kotlin.jvm.Throws
 
 /**
  * Implements API Methods of the [General service](https://docs.kevin.eu/public/platform/v0.3#tag/General-service)

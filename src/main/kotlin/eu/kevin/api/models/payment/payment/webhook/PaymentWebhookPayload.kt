@@ -7,7 +7,7 @@ import eu.kevin.api.models.payment.StatusGroup
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PaymentWebhookPayload (
+data class PaymentWebhookPayload(
     val id: String,
     val bankStatus: BankStatus? = null,
     val cardStatus: CardStatus? = null,

@@ -57,9 +57,7 @@ fun Project.configureCodeStyleRules() = configure<org.jlleitschuh.gradle.ktlint.
     disabledRules.set(
         setOf(
             // can't be automatically fixed and does not affect code readability
-            "no-wildcard-imports",
-            // does not affect code readability
-            "final-newline"
+            "no-wildcard-imports"
         )
     )
 }

@@ -10,11 +10,13 @@ internal object Endpoint {
             fun getPaymentStatus(paymentId: String) = "/pis/payment/$paymentId/status"
             fun initiatePaymentRefund(paymentId: String) = "/pis/payment/$paymentId/refunds"
         }
+
         object Auth {
             fun startAuthentication() = "/auth"
             fun receiveToken() = "/auth/token"
             fun receiveTokenContent() = "/auth/token/content"
         }
+
         object General {
             fun getSupportedCountries() = "/auth/countries"
             fun getSupportedBanks() = "/auth/banks"
@@ -23,6 +25,7 @@ internal object Endpoint {
             fun getPaymentMethods() = "/auth/paymentMethods"
             fun getProjectSettings() = "/auth/project/settings"
         }
+
         object Account {
             fun getAccountsList() = "/ais/accounts"
             fun getAccountDetails(accountId: String) = "/ais/accounts/$accountId"
