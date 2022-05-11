@@ -15,10 +15,10 @@ data class AccountTransactionResponse(
     val isBooked: Boolean,
     val amount: BigDecimal,
     val currencyCode: String,
-    val counterPartyName: String,
+    val counterPartyName: String? = null,
     val counterPartyAccount: CounterPartyAccount,
-    val informationStructured: InformationStructured,
-    val informationUnstructured: String,
-    val bookingDate: LocalDate,
+    val informationStructured: InformationStructured? = null,
+    val informationUnstructured: String? = null,
+    val bookingDate: LocalDate? = null,
     val valueDate: LocalDate? = null
 )

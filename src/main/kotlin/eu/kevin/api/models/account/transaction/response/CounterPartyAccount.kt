@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CounterPartyAccount(
-    val iban: String,
+    val iban: String? = null,
     val bban: String? = null,
     val pan: String? = null,
     val sortCodeAccountNumber: String? = null

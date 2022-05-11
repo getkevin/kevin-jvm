@@ -11,7 +11,6 @@ import eu.kevin.api.models.account.detail.GetAccountDetailsRequest
 import eu.kevin.api.models.account.list.AccountResponse
 import eu.kevin.api.models.account.transaction.request.GetAccountTransactionsRequest
 import eu.kevin.api.models.account.transaction.response.AccountTransactionResponse
-import eu.kevin.api.serializers.LocalDateSerializer
 import io.ktor.client.*
 import io.ktor.client.request.*
 import kotlinx.serialization.json.Json
@@ -55,8 +54,8 @@ class AccountClient internal constructor(
             path = Endpoint.Paths.Account.getAccountTransactions(accountId = request.accountId)
         ) {
             appendAccountRequestHeaders(headers = request.headers)
-            parameter("dateFrom", serializer.encodeToString(LocalDateSerializer, request.dateFrom))
-            parameter("dateTo", serializer.encodeToString(LocalDateSerializer, request.dateTo))
+            parameter("dateFrom", request.dateFrom)
+            parameter("dateTo", request.dateTo)
         }.data
 
     /**

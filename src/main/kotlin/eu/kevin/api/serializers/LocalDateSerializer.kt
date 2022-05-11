@@ -18,6 +18,6 @@ object LocalDateSerializer : KSerializer<LocalDate> {
     }
 
     override fun deserialize(decoder: Decoder): LocalDate {
-        return LocalDate.parse(decoder.decodeString(), format)
+        return LocalDate.parse(decoder.decodeString().substringBefore('T'), format)
     }
 }
