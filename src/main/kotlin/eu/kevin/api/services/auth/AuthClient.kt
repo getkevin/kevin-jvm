@@ -43,6 +43,7 @@ class AuthClient internal constructor(
                 headers {
                     append("Request-Id", requestId)
                     append("Redirect-URL", redirectUrl)
+                    webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
         }.run {
