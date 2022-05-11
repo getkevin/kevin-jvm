@@ -7,6 +7,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 
 @OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = LocalDate::class)
@@ -18,6 +19,11 @@ object LocalDateSerializer : KSerializer<LocalDate> {
     }
 
     override fun deserialize(decoder: Decoder): LocalDate {
-        return LocalDate.parse(decoder.decodeString().substringBefore('T'), format)
+        val date = decoder.decodeString()
+        return try {
+            LocalDate.parse(date, DateTimeFormatter.ISO_DATE_TIME)
+        } catch (exception: DateTimeParseException) {
+            LocalDate.parse(date, format)
+        }
     }
 }
