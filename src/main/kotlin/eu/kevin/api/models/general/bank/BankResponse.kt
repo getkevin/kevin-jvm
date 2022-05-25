@@ -12,5 +12,8 @@ data class BankResponse(
     val isSandbox: Boolean,
     val imageUri: String? = null,
     val bic: String,
-    val isBeta: Boolean
+    val isBeta: Boolean,
+    val hasSavingsBanks: Boolean,
+    val isSavingsBank: Boolean,
+    val isAccountLinkingSupported: Boolean
 )
