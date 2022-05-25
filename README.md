@@ -5,7 +5,7 @@
 
 # kevin. JVM Client
 
-JVM client implementing [kevin. platform API v0.3](https://docs.kevin.eu/public/platform/v0.3).
+JVM client implementing [kevin. platform API v0.3](https://api-reference.kevin.eu/public/platform/v0.3).
 
 ## Prerequisites
 
