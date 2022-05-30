@@ -2,6 +2,7 @@ package eu.kevin.api.services.account
 
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
+import eu.kevin.api.extensions.appendAtStartIfNotExist
 import eu.kevin.api.models.ResponseArray
 import eu.kevin.api.models.account.AccountRequestHeaders
 import eu.kevin.api.models.account.balance.request.GetAccountBalanceRequest
@@ -72,7 +73,7 @@ class AccountClient internal constructor(
     private fun HttpRequestBuilder.appendAccountRequestHeaders(headers: AccountRequestHeaders) {
         headers.run {
             headers {
-                append("Authorization", "Bearer $accessToken")
+                append("Authorization", accessToken.appendAtStartIfNotExist("Bearer"))
                 append("PSU-IP-Address", psuIPAddress)
                 append("PSU-User-Agent", psuUserAgent)
                 append("PSU-IP-Port", psuIPPort)

@@ -2,6 +2,7 @@ package eu.kevin.api.services.payment
 
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
+import eu.kevin.api.extensions.appendAtStartIfNotExist
 import eu.kevin.api.extensions.appendQueryParameter
 import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequest
 import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequestBody
@@ -43,7 +44,9 @@ class PaymentClient internal constructor(
                 parameter("paymentMethodPreferred", paymentMethodPreferred?.title)
 
                 headers {
-                    accessToken?.let { append(HttpHeaders.Authorization, "Bearer $it") }
+                    accessToken?.let {
+                        append(HttpHeaders.Authorization, it.appendAtStartIfNotExist("Bearer"))
+                    }
                     append("Redirect-URL", redirectUrl)
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }

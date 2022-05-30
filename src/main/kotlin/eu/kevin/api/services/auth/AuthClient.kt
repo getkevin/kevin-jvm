@@ -2,6 +2,7 @@ package eu.kevin.api.services.auth
 
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
+import eu.kevin.api.extensions.appendAtStartIfNotExist
 import eu.kevin.api.extensions.appendQueryParameter
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequest
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequestBody
@@ -83,7 +84,7 @@ class AuthClient internal constructor(
             path = Endpoint.Paths.Auth.receiveTokenContent()
         ) {
             headers {
-                append(HttpHeaders.Authorization, "Bearer ${request.accessToken}")
+                append(HttpHeaders.Authorization, request.accessToken.appendAtStartIfNotExist("Bearer"))
             }
         }
 }
