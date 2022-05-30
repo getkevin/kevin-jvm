@@ -84,7 +84,7 @@ class AuthClient internal constructor(
             path = Endpoint.Paths.Auth.receiveTokenContent()
         ) {
             headers {
-                append(HttpHeaders.Authorization, request.accessToken.appendAtStartIfNotExist("Bearer"))
+                append(HttpHeaders.Authorization, request.accessToken.appendAtStartIfNotExist("Bearer "))
             }
         }
 }

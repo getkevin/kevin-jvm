@@ -45,7 +45,7 @@ class PaymentClient internal constructor(
 
                 headers {
                     accessToken?.let {
-                        append(HttpHeaders.Authorization, it.appendAtStartIfNotExist("Bearer"))
+                        append(HttpHeaders.Authorization, it.appendAtStartIfNotExist("Bearer "))
                     }
                     append("Redirect-URL", redirectUrl)
                     webhookUrl?.let { append("Webhook-URL", it) }

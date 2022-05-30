@@ -73,7 +73,7 @@ class AccountClient internal constructor(
     private fun HttpRequestBuilder.appendAccountRequestHeaders(headers: AccountRequestHeaders) {
         headers.run {
             headers {
-                append("Authorization", accessToken.appendAtStartIfNotExist("Bearer"))
+                append("Authorization", accessToken.appendAtStartIfNotExist("Bearer "))
                 append("PSU-IP-Address", psuIPAddress)
                 append("PSU-User-Agent", psuUserAgent)
                 append("PSU-IP-Port", psuIPPort)
