@@ -12,6 +12,7 @@ import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.serialization.json.Json
+import java.net.URI
 
 class Client internal constructor(
     private val authorization: Authorization,
@@ -37,7 +38,9 @@ class Client internal constructor(
     private fun HttpClient.withAuthorization() = this.config {
         defaultRequest {
             url.takeFrom(
-                URLBuilder().takeFrom("${apiUrl}${Endpoint.VERSION}").apply {
+                URLBuilder().takeFrom(
+                    URI.create("${apiUrl}/").resolve(".${Endpoint.VERSION}")
+                ).apply {
                     encodedPath += url.encodedPath
                 }
             )
