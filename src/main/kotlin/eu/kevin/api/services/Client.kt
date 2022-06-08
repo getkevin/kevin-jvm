@@ -18,7 +18,8 @@ class Client internal constructor(
     private val authorization: Authorization,
     private val apiUrl: String,
     private val httpClient: HttpClient,
-    private val serializer: Json
+    private val serializer: Json,
+    private val customHeaders: Map<String, String>
 ) {
     val paymentClient by lazy { PaymentClient(httpClient = httpClient.withAuthorization()) }
     val authClient by lazy { AuthClient(httpClient = httpClient.withAuthorization()) }
@@ -27,12 +28,14 @@ class Client internal constructor(
 
     constructor(
         authorization: Authorization,
-        apiUrl: String = Endpoint.BASE
+        apiUrl: String = Endpoint.BASE,
+        customHeaders: Map<String, String> = mapOf()
     ) : this(
         authorization = authorization,
         apiUrl = apiUrl,
         httpClient = Dependencies.httpClient,
-        serializer = Dependencies.serializer
+        serializer = Dependencies.serializer,
+        customHeaders = customHeaders
     )
 
     private fun HttpClient.withAuthorization() = this.config {
@@ -46,6 +49,7 @@ class Client internal constructor(
             )
             header("Client-Id", authorization.clientId)
             header("Client-Secret", authorization.clientSecret)
+            customHeaders.forEach { header(it.key, it.value) }
         }
     }
 }
