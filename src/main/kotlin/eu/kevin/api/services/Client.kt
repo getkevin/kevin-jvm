@@ -42,7 +42,7 @@ class Client internal constructor(
         defaultRequest {
             url.takeFrom(
                 URLBuilder().takeFrom(
-                    URI.create("$apiUrl/").resolve(".${Endpoint.VERSION}")
+                    URI.create("${apiUrl}/").resolve(".${Endpoint.VERSION}")
                 ).apply {
                     encodedPath += url.encodedPath
                 }
