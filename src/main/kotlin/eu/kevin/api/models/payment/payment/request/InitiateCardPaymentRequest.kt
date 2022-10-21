@@ -2,7 +2,7 @@ package eu.kevin.api.models.payment.payment.request
 
 import java.math.BigDecimal
 
-data class InitiateCardPaymentRequest(
+data class InitiateCardPaymentRequest @JvmOverloads constructor(
     override val redirectUrl: String,
     override val amount: BigDecimal,
     override val currencyCode: String,
