@@ -16,7 +16,7 @@ data class InitiateHybridPaymentRequest(
     override var paymentMethodPreferred: PaymentMethod? = null,
     override var webhookUrl: String? = null,
     override var lang: String? = null
-): InitiatePaymentRequest(
+) : InitiatePaymentRequest(
     redirectUrl,
     amount,
     currencyCode,

@@ -15,7 +15,7 @@ data class InitiateCardPaymentRequest(
     override var redirectPreferred: Boolean? = null,
     override var webhookUrl: String? = null,
     override var lang: String? = null
-): InitiatePaymentRequest(
+) : InitiatePaymentRequest(
     redirectUrl,
     amount,
     currencyCode,
