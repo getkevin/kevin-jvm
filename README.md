@@ -13,20 +13,23 @@ JVM client implementing [kevin. platform API v0.3](https://api-reference.kevin.e
 
 ## Installation
 
-Package and installation instructions are available at the [Maven Central Repository](https://maven-badges.herokuapp.com/maven-central/eu.kevin/kevin-jvm)
+Package and installation instructions are available at
+the [Maven Central Repository](https://maven-badges.herokuapp.com/maven-central/eu.kevin/kevin-jvm)
 
 ### Maven
+
 ```
 <dependency>
   <groupId>eu.kevin</groupId>
   <artifactId>kevin-jvm</artifactId>
-  <version>0.2.7</version>
+  <version>0.2.8</version>
 </dependency>
 ```
 
 ### Gradle
+
 ```
-implementation 'eu.kevin:kevin-jvm:0.2.7'
+implementation 'eu.kevin:kevin-jvm:0.2.8'
 ```
 
 ## Usage Examples
@@ -49,14 +52,17 @@ val client = Client(
 ```
 
 ### Call an API method
+
+#### Bank payment example:
+
 ```kotlin
-val request = InitiatePaymentRequest(
+val request = InitiateBankPaymentRequest(
     redirectUrl = "https://yourapp.com/callback",
     amount = BigDecimal("12.34"),
     currencyCode = "EUR",
     description = "My payment",
     identifier = UserIdentifier(email = "jsmith@example.com"),
-    bankPaymentMethod = BankPaymentMethod(
+    mandatoryBankPaymentMethod = BankPaymentMethod(
         endToEndId = "123",
         creditorName = "John Doe",
         informationStructured = InformationStructured(
@@ -69,6 +75,59 @@ val request = InitiatePaymentRequest(
         )
     )
 )
+```
+
+#### Card payment example:
+```kotlin
+val request = InitiateCardPaymentRequest(
+    redirectUrl = "https://yourapp.com/callback",
+    amount = BigDecimal("12.34"),
+    currencyCode = "EUR",
+    description = "My payment",
+    identifier = UserIdentifier(email = "jsmith@example.com"),
+    mandatoryBankPaymentMethod = BankPaymentMethod(
+        endToEndId = "123",
+        creditorName = "John Doe",
+        informationStructured = InformationStructured(
+            reference = "00220055",
+            referenceType = "SCOR"
+        ),
+        requestedExecutionDate = LocalDate.of(2021, 3, 8),
+        creditorAccount = Account(
+            iban = "LT144010051005081586"
+        )
+    ),
+    mandatoryCardPaymentMethod = CardPaymentMethod()
+)
+```
+
+#### Hybrid payment example:
+```kotlin
+val request = InitiateHybridPaymentRequest(
+    redirectUrl = "https://yourapp.com/callback",
+    amount = BigDecimal("12.34"),
+    currencyCode = "EUR",
+    description = "My payment",
+    identifier = UserIdentifier(email = "jsmith@example.com"),
+    mandatoryBankPaymentMethod = BankPaymentMethod(
+        endToEndId = "123",
+        creditorName = "John Doe",
+        informationStructured = InformationStructured(
+            reference = "00220055",
+            referenceType = "SCOR"
+        ),
+        requestedExecutionDate = LocalDate.of(2021, 3, 8),
+        creditorAccount = Account(
+            iban = "LT144010051005081586"
+        )
+    ),
+    mandatoryCardPaymentMethod = CardPaymentMethod()
+)
+```
+
+### Handle the response
+
+```kotlin
 
 val response = try {
     client.paymentClient.initiatePayment(request)
@@ -79,6 +138,7 @@ val response = try {
 ```
 
 ### Parse the request body of a webhook response
+
 ```kotlin
 import eu.kevin.api.services.Parser
 
