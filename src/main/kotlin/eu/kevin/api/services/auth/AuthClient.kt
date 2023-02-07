@@ -12,6 +12,7 @@ import eu.kevin.api.models.auth.token.request.RefreshTokenRequest
 import eu.kevin.api.models.auth.token.response.ReceiveTokenResponse
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentRequest
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentResponse
+import eu.kevin.api.plugins.KtorClientMicrometerMetrics
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -47,6 +48,7 @@ class AuthClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Auth.startAuthentication())
         }.run {
             copy(
                 authorizationLink = Url(authorizationLink)
@@ -63,7 +65,9 @@ class AuthClient internal constructor(
         httpClient.post(
             path = Endpoint.Paths.Auth.receiveToken(),
             body = request
-        )
+        ) {
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Auth.receiveToken())
+        }
 
     /**
      * API Method: [Receive token](https://docs.kevin.eu/public/platform/v0.3#operation/receiveToken), with `grantType` set to `refreshToken`
@@ -73,7 +77,9 @@ class AuthClient internal constructor(
         httpClient.post(
             path = Endpoint.Paths.Auth.receiveToken(),
             body = request
-        )
+        ) {
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Auth.receiveToken())
+        }
 
     /**
      * API Method: [Receive token content](https://docs.kevin.eu/public/platform/v0.3#operation/receiveTokenContent)
@@ -86,5 +92,6 @@ class AuthClient internal constructor(
             headers {
                 append(HttpHeaders.Authorization, request.accessToken.appendAtStartIfNotExist("Bearer "))
             }
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Auth.receiveTokenContent())
         }
 }

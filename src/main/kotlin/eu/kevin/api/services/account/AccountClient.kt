@@ -12,16 +12,16 @@ import eu.kevin.api.models.account.detail.GetAccountDetailsRequest
 import eu.kevin.api.models.account.list.AccountResponse
 import eu.kevin.api.models.account.transaction.request.GetAccountTransactionsRequest
 import eu.kevin.api.models.account.transaction.response.AccountTransactionResponse
+import eu.kevin.api.plugins.KtorClientMicrometerMetrics
 import io.ktor.client.*
 import io.ktor.client.request.*
-import kotlinx.serialization.json.Json
+import io.ktor.util.*
 
 /**
  * Implements API Methods of the [Account information service](https://docs.kevin.eu/public/platform/v0.3#tag/Account-Information-Service)
  */
 class AccountClient internal constructor(
-    private val httpClient: HttpClient,
-    private val serializer: Json
+    private val httpClient: HttpClient
 ) {
 
     /**
@@ -33,6 +33,7 @@ class AccountClient internal constructor(
             path = Endpoint.Paths.Account.getAccountsList()
         ) {
             appendAccountRequestHeaders(headers = request)
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Account.getAccountsList())
         }.data
 
     /**
@@ -44,6 +45,7 @@ class AccountClient internal constructor(
             path = Endpoint.Paths.Account.getAccountDetails(accountId = request.accountId)
         ) {
             appendAccountRequestHeaders(headers = request.headers)
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Account.getAccountDetails("$"))
         }
 
     /**
@@ -57,6 +59,7 @@ class AccountClient internal constructor(
             appendAccountRequestHeaders(headers = request.headers)
             parameter("dateFrom", request.dateFrom)
             parameter("dateTo", request.dateTo)
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Account.getAccountTransactions("$"))
         }.data
 
     /**
@@ -68,6 +71,7 @@ class AccountClient internal constructor(
             path = Endpoint.Paths.Account.getAccountBalance(accountId = request.accountId)
         ) {
             appendAccountRequestHeaders(headers = request.headers)
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Account.getAccountBalance("$"))
         }.data
 
     private fun HttpRequestBuilder.appendAccountRequestHeaders(headers: AccountRequestHeaders) {
