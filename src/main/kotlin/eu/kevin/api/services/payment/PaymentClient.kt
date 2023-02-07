@@ -12,6 +12,7 @@ import eu.kevin.api.models.payment.paymentStatus.GetPaymentStatusResponse
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequest
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequestBody
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundResponse
+import eu.kevin.api.plugins.KtorClientMicrometerMetrics
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -51,6 +52,7 @@ class PaymentClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Payment.initiatePayment())
         }.run {
             copy(
                 confirmLink = confirmLink?.let {
@@ -66,7 +68,9 @@ class PaymentClient internal constructor(
     suspend fun getPaymentStatus(request: GetPaymentStatusRequest): GetPaymentStatusResponse =
         httpClient.get(
             path = Endpoint.Paths.Payment.getPaymentStatus(paymentId = request.paymentId)
-        )
+        ) {
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Payment.getPaymentStatus("$"))
+        }
 
     /**
      * API Method: [Initiate payment refund](https://docs.kevin.eu/public/platform/v0.3#operation/initiatePaymentRefund)
@@ -82,5 +86,6 @@ class PaymentClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
+            attributes.put(KtorClientMicrometerMetrics.pathAttributeKey, Endpoint.Paths.Payment.initiatePaymentRefund("$"))
         }
 }

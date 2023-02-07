@@ -3,6 +3,7 @@ package eu.kevin.api.services
 import eu.kevin.api.Dependencies
 import eu.kevin.api.Endpoint
 import eu.kevin.api.models.Authorization
+import eu.kevin.api.plugins.KtorClientMicrometerMetrics
 import eu.kevin.api.services.account.AccountClient
 import eu.kevin.api.services.auth.AuthClient
 import eu.kevin.api.services.general.GeneralClient
@@ -11,31 +12,32 @@ import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
+import io.micrometer.core.instrument.MeterRegistry
 import java.net.URI
 
 class Client internal constructor(
     private val authorization: Authorization,
     private val apiUrl: String,
     private val httpClient: HttpClient,
-    private val serializer: Json,
-    private val customHeaders: Map<String, String>
+    private val customHeaders: Map<String, String>,
+    private val micrometerRegistry: MeterRegistry?
 ) {
     val paymentClient by lazy { PaymentClient(httpClient = httpClient.withAuthorization()) }
     val authClient by lazy { AuthClient(httpClient = httpClient.withAuthorization()) }
     val generalClient by lazy { GeneralClient(httpClient = httpClient.withAuthorization()) }
-    val accountClient by lazy { AccountClient(httpClient = httpClient.withAuthorization(), serializer = serializer) }
+    val accountClient by lazy { AccountClient(httpClient = httpClient.withAuthorization()) }
 
     constructor(
         authorization: Authorization,
         apiUrl: String = Endpoint.BASE,
-        customHeaders: Map<String, String> = mapOf()
+        customHeaders: Map<String, String> = mapOf(),
+        micrometerRegistry: MeterRegistry? = null
     ) : this(
         authorization = authorization,
         apiUrl = apiUrl,
         httpClient = Dependencies.httpClient,
-        serializer = Dependencies.serializer,
-        customHeaders = customHeaders
+        customHeaders = customHeaders,
+        micrometerRegistry = micrometerRegistry
     )
 
     private fun HttpClient.withAuthorization() = this.config {
@@ -50,6 +52,11 @@ class Client internal constructor(
             header("Client-Id", authorization.clientId)
             header("Client-Secret", authorization.clientSecret)
             customHeaders.forEach { header(it.key, it.value) }
+        }
+        if (micrometerRegistry != null) {
+            install(KtorClientMicrometerMetrics) {
+                meterRegistry = micrometerRegistry
+            }
         }
     }
 }

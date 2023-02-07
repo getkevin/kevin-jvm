@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "eu.kevin"
-version = "0.2.7"
+version = "0.2.9"
 
 repositories {
     mavenCentral()
@@ -22,6 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-client-core:${Versions.KTOR}")
     implementation("io.ktor:ktor-client-cio:${Versions.KTOR}")
     implementation("io.ktor:ktor-client-serialization:${Versions.KTOR}")
+    implementation("io.micrometer:micrometer-registry-prometheus:${Versions.MICROMETER}")
 
     testImplementation(kotlin("test"))
     testImplementation("io.ktor:ktor-client-mock:${Versions.KTOR}")
