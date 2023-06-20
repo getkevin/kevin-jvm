@@ -3,7 +3,6 @@ package eu.kevin.api.services.auth
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
 import eu.kevin.api.extensions.appendAtStartIfNotExist
-import eu.kevin.api.extensions.appendQueryParameter
 import eu.kevin.api.extensions.suspendingToCompletableFuture
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequest
 import eu.kevin.api.models.auth.authentication.request.StartAuthenticationRequestBody
@@ -14,6 +13,7 @@ import eu.kevin.api.models.auth.token.response.ReceiveTokenResponse
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentRequest
 import eu.kevin.api.models.auth.tokenContent.ReceiveTokenContentResponse
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import java.util.concurrent.CompletableFuture
@@ -29,19 +29,19 @@ class AuthClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun startAuthentication(request: StartAuthenticationRequest): StartAuthenticationResponse =
-        httpClient.post<StartAuthenticationResponse>(
-            path = Endpoint.Paths.Auth.startAuthentication(),
-            body = StartAuthenticationRequestBody(
-                email = request.email,
-                cardMethod = request.cardMethod
+        httpClient.post {
+            url(path = Endpoint.Paths.Auth.startAuthentication())
+            setBody(
+                StartAuthenticationRequestBody(
+                    email = request.email,
+                    cardMethod = request.cardMethod
+                )
             )
-        ) {
             request.run {
                 parameter("bankId", bankId)
                 parameter("redirectPreferred", redirectPreferred)
-                scopes?.forEach {
-                    parameter("scopes", it)
-                }
+                scopes?.forEach { parameter("scopes", it) }
+                parameter("lang", request.lang)
 
                 headers {
                     append("Request-Id", requestId)
@@ -49,13 +49,7 @@ class AuthClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
-        }.run {
-            copy(
-                authorizationLink = Url(authorizationLink)
-                    .appendQueryParameter("lang", request.lang)
-                    .toString()
-            )
-        }
+        }.body()
 
     /**
      * Equivalent of suspending `startAuthentication(request: StartAuthenticationRequest)` for Java interoperability
@@ -70,10 +64,10 @@ class AuthClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun receiveToken(request: ReceiveTokenRequest): ReceiveTokenResponse =
-        httpClient.post(
-            path = Endpoint.Paths.Auth.receiveToken(),
-            body = request
-        )
+        httpClient.post {
+            url(path = Endpoint.Paths.Auth.receiveToken())
+            setBody(request)
+        }.body()
 
     /**
      * Equivalent of suspending `receiveToken(request: ReceiveTokenRequest)` for Java interoperability
@@ -88,10 +82,10 @@ class AuthClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun refreshToken(request: RefreshTokenRequest): ReceiveTokenResponse =
-        httpClient.post(
-            path = Endpoint.Paths.Auth.receiveToken(),
-            body = request
-        )
+        httpClient.post {
+            url(path = Endpoint.Paths.Auth.receiveToken())
+            setBody(request)
+        }.body()
 
     /**
      * Equivalent of suspending `refreshToken(request: RefreshTokenRequest)` for Java interoperability
@@ -106,13 +100,12 @@ class AuthClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun receiveTokenContent(request: ReceiveTokenContentRequest): ReceiveTokenContentResponse =
-        httpClient.get(
-            path = Endpoint.Paths.Auth.receiveTokenContent()
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.Auth.receiveTokenContent())
             headers {
                 append(HttpHeaders.Authorization, request.accessToken.appendAtStartIfNotExist("Bearer "))
             }
-        }
+        }.body()
 
     /**
      * Equivalent of suspending `receiveTokenContent(request: ReceiveTokenContentRequest)` for Java interoperability

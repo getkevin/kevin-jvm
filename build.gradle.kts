@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "eu.kevin"
-version = "0.3.0"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -22,6 +22,8 @@ dependencies {
     implementation("io.ktor:ktor-client-core:${Versions.KTOR}")
     implementation("io.ktor:ktor-client-cio:${Versions.KTOR}")
     implementation("io.ktor:ktor-client-serialization:${Versions.KTOR}")
+    implementation("io.ktor:ktor-client-content-negotiation:${Versions.KTOR}")
+    implementation("io.ktor:ktor-serialization-kotlinx-json:${Versions.KTOR}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.4")
 
     testImplementation(kotlin("test"))

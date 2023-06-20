@@ -7,6 +7,7 @@ import eu.kevin.api.models.ResponseArray
 import eu.kevin.api.models.general.bank.BankResponse
 import eu.kevin.api.models.general.projectSettings.GetProjectSettingsResponse
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
 import java.util.concurrent.CompletableFuture
 
@@ -21,9 +22,9 @@ class GeneralClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getSupportedCountries(): List<String> =
-        httpClient.get<ResponseArray<String>>(
-            path = Endpoint.Paths.General.getSupportedCountries()
-        ).data
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getSupportedCountries())
+        }.body<ResponseArray<String>>().data
 
     /**
      * Equivalent of suspending `getSupportedCountries()` for Java interoperability
@@ -39,11 +40,10 @@ class GeneralClient internal constructor(
     @Throws(KevinApiErrorException::class)
     @JvmOverloads
     suspend fun getSupportedBanks(countryCode: String? = null): List<BankResponse> =
-        httpClient.get<ResponseArray<BankResponse>>(
-            path = Endpoint.Paths.General.getSupportedBanks()
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getSupportedBanks())
             parameter("countryCode", countryCode)
-        }.data
+        }.body<ResponseArray<BankResponse>>().data
 
     /**
      * Equivalent of suspending `getSupportedBanks(countryCode: String?)` for Java interoperability
@@ -58,9 +58,9 @@ class GeneralClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getSupportedBank(bankId: String): BankResponse =
-        httpClient.get(
-            path = Endpoint.Paths.General.getSupportedBank(bankId = bankId)
-        )
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getSupportedBank(bankId = bankId))
+        }.body()
 
     /**
      * Equivalent of suspending `getSupportedBank(bankId: String)` for Java interoperability
@@ -75,9 +75,9 @@ class GeneralClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getSupportedBankByCardNumberPiece(cardNumberPiece: String): BankResponse =
-        httpClient.get(
-            path = Endpoint.Paths.General.getSupportedBankByCardNumberPiece(cardNumberPiece = cardNumberPiece)
-        )
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getSupportedBankByCardNumberPiece(cardNumberPiece = cardNumberPiece))
+        }.body()
 
     /**
      * Equivalent of suspending `getSupportedBankByCardNumberPiece(cardNumberPiece: String)` for Java interoperability
@@ -92,9 +92,9 @@ class GeneralClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getPaymentMethods(): List<String> =
-        httpClient.get<ResponseArray<String>>(
-            path = Endpoint.Paths.General.getPaymentMethods()
-        ).data
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getPaymentMethods())
+        }.body<ResponseArray<String>>().data
 
     /**
      * Equivalent of suspending `getPaymentMethods()` for Java interoperability
@@ -109,9 +109,9 @@ class GeneralClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getProjectSettings(): GetProjectSettingsResponse =
-        httpClient.get(
-            path = Endpoint.Paths.General.getProjectSettings()
-        )
+        httpClient.get {
+            url(path = Endpoint.Paths.General.getProjectSettings())
+        }.body()
 
     /**
      * Equivalent of suspending `getProjectSettings()` for Java interoperability

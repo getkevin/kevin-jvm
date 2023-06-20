@@ -14,16 +14,15 @@ import eu.kevin.api.models.account.list.AccountResponse
 import eu.kevin.api.models.account.transaction.request.GetAccountTransactionsRequest
 import eu.kevin.api.models.account.transaction.response.AccountTransactionResponse
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
-import kotlinx.serialization.json.Json
 import java.util.concurrent.CompletableFuture
 
 /**
  * Implements API Methods of the [Account information service](https://api-reference.kevin.eu/public/platform/v0.3#tag/Account-Information-Service)
  */
 class AccountClient internal constructor(
-    private val httpClient: HttpClient,
-    private val serializer: Json
+    private val httpClient: HttpClient
 ) {
 
     /**
@@ -31,11 +30,10 @@ class AccountClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getAccountsList(request: AccountRequestHeaders): List<AccountResponse> =
-        httpClient.get<ResponseArray<AccountResponse>>(
-            path = Endpoint.Paths.Account.getAccountsList()
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.Account.getAccountsList())
             appendAccountRequestHeaders(headers = request)
-        }.data
+        }.body<ResponseArray<AccountResponse>>().data
 
     /**
      * Equivalent of suspending `getAccountsList(request: AccountRequestHeaders)` for Java interoperability
@@ -50,11 +48,10 @@ class AccountClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getAccountDetails(request: GetAccountDetailsRequest): AccountDetailsResponse =
-        httpClient.get(
-            path = Endpoint.Paths.Account.getAccountDetails(accountId = request.accountId)
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.Account.getAccountDetails(accountId = request.accountId))
             appendAccountRequestHeaders(headers = request.headers)
-        }
+        }.body()
 
     /**
      * Equivalent of suspending `getAccountDetails(request: GetAccountDetailsRequest)` for Java interoperability
@@ -69,13 +66,12 @@ class AccountClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getAccountTransactions(request: GetAccountTransactionsRequest): List<AccountTransactionResponse> =
-        httpClient.get<ResponseArray<AccountTransactionResponse>>(
-            path = Endpoint.Paths.Account.getAccountTransactions(accountId = request.accountId)
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.Account.getAccountTransactions(accountId = request.accountId))
             appendAccountRequestHeaders(headers = request.headers)
             parameter("dateFrom", request.dateFrom)
             parameter("dateTo", request.dateTo)
-        }.data
+        }.body<ResponseArray<AccountTransactionResponse>>().data
 
     /**
      * Equivalent of suspending `getAccountTransactions(request: GetAccountTransactionsRequest)` for Java interoperability
@@ -90,11 +86,10 @@ class AccountClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getAccountBalances(request: GetAccountBalanceRequest): List<AccountBalanceResponse> =
-        httpClient.get<ResponseArray<AccountBalanceResponse>>(
-            path = Endpoint.Paths.Account.getAccountBalance(accountId = request.accountId)
-        ) {
+        httpClient.get {
+            url(path = Endpoint.Paths.Account.getAccountBalance(accountId = request.accountId))
             appendAccountRequestHeaders(headers = request.headers)
-        }.data
+        }.body<ResponseArray<AccountBalanceResponse>>().data
 
     /**
      * Equivalent of suspending `getAccountBalances(request: GetAccountBalanceRequest)` for Java interoperability

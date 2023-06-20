@@ -3,7 +3,6 @@ package eu.kevin.api.services.payment
 import eu.kevin.api.Endpoint
 import eu.kevin.api.exceptions.KevinApiErrorException
 import eu.kevin.api.extensions.appendAtStartIfNotExist
-import eu.kevin.api.extensions.appendQueryParameter
 import eu.kevin.api.extensions.suspendingToCompletableFuture
 import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequest
 import eu.kevin.api.models.payment.payment.request.InitiatePaymentRequestBody
@@ -14,7 +13,9 @@ import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequest
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundRequestBody
 import eu.kevin.api.models.payment.refund.InitiatePaymentRefundResponse
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import java.util.concurrent.CompletableFuture
 
@@ -29,21 +30,23 @@ class PaymentClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun initiatePayment(request: InitiatePaymentRequest): InitiatePaymentResponse =
-        httpClient.post<InitiatePaymentResponse>(
-            path = Endpoint.Paths.Payment.initiatePayment(),
-            body = InitiatePaymentRequestBody(
-                amount = request.amount,
-                currencyCode = request.currencyCode,
-                description = request.description,
-                bankPaymentMethod = request.bankPaymentMethod,
-                cardPaymentMethod = request.cardPaymentMethod,
-                identifier = request.identifier
+        httpClient.post {
+            url(path = Endpoint.Paths.Payment.initiatePayment())
+            setBody(
+                InitiatePaymentRequestBody(
+                    amount = request.amount,
+                    currencyCode = request.currencyCode,
+                    description = request.description,
+                    bankPaymentMethod = request.bankPaymentMethod,
+                    cardPaymentMethod = request.cardPaymentMethod,
+                    identifier = request.identifier
+                )
             )
-        ) {
             request.run {
                 parameter("bankId", bankId)
                 parameter("redirectPreferred", redirectPreferred)
                 parameter("paymentMethodPreferred", paymentMethodPreferred?.title)
+                parameter("lang", request.lang)
 
                 headers {
                     accessToken?.let {
@@ -53,13 +56,7 @@ class PaymentClient internal constructor(
                     webhookUrl?.let { append("Webhook-URL", it) }
                 }
             }
-        }.run {
-            copy(
-                confirmLink = confirmLink?.let {
-                    Url(it).appendQueryParameter("lang", request.lang).toString()
-                }
-            )
-        }
+        }.body()
 
     /**
      * Equivalent of suspending `initiatePayment(request: InitiatePaymentRequest)` for Java interoperability
@@ -74,9 +71,9 @@ class PaymentClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun getPaymentStatus(request: GetPaymentStatusRequest): GetPaymentStatusResponse =
-        httpClient.get(
-            path = Endpoint.Paths.Payment.getPaymentStatus(paymentId = request.paymentId)
-        )
+        httpClient.get {
+            url(path = Endpoint.Paths.Payment.getPaymentStatus(paymentId = request.paymentId))
+        }.body()
 
     /**
      * Equivalent of suspending `getPaymentStatus(request: GetPaymentStatusRequest)` for Java interoperability
@@ -91,16 +88,13 @@ class PaymentClient internal constructor(
      */
     @Throws(KevinApiErrorException::class)
     suspend fun initiatePaymentRefund(request: InitiatePaymentRefundRequest): InitiatePaymentRefundResponse =
-        httpClient.post(
-            path = Endpoint.Paths.Payment.initiatePaymentRefund(paymentId = request.paymentId),
-            body = InitiatePaymentRefundRequestBody(amount = request.amount)
-        ) {
-            request.run {
-                headers {
-                    webhookUrl?.let { append("Webhook-URL", it) }
-                }
+        httpClient.post {
+            url(path = Endpoint.Paths.Payment.initiatePaymentRefund(paymentId = request.paymentId))
+            setBody(InitiatePaymentRefundRequestBody(amount = request.amount))
+            headers {
+                request.webhookUrl?.let { append("Webhook-URL", it) }
             }
-        }
+        }.body()
 
     /**
      * Equivalent of suspending ` initiatePaymentRefund(request: InitiatePaymentRefundRequest)` for Java interoperability

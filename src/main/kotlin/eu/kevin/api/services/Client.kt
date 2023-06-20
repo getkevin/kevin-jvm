@@ -8,23 +8,21 @@ import eu.kevin.api.services.auth.AuthClient
 import eu.kevin.api.services.general.GeneralClient
 import eu.kevin.api.services.payment.PaymentClient
 import io.ktor.client.*
-import io.ktor.client.features.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
 import java.net.URI
 
 class Client internal constructor(
     private val authorization: Authorization,
     private val apiUrl: String,
     private val httpClient: HttpClient,
-    private val serializer: Json,
     private val customHeaders: Map<String, String>
 ) {
     val paymentClient by lazy { PaymentClient(httpClient = httpClient.withAuthorization()) }
     val authClient by lazy { AuthClient(httpClient = httpClient.withAuthorization()) }
     val generalClient by lazy { GeneralClient(httpClient = httpClient.withAuthorization()) }
-    val accountClient by lazy { AccountClient(httpClient = httpClient.withAuthorization(), serializer = serializer) }
+    val accountClient by lazy { AccountClient(httpClient = httpClient.withAuthorization()) }
 
     constructor(
         authorization: Authorization,
@@ -34,7 +32,6 @@ class Client internal constructor(
         authorization = authorization,
         apiUrl = apiUrl,
         httpClient = Dependencies.httpClient,
-        serializer = Dependencies.serializer,
         customHeaders = customHeaders
     )
 
