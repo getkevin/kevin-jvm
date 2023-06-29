@@ -6,31 +6,31 @@ internal object Endpoint {
 
     object Paths {
         object Payment {
-            fun initiatePayment() = "/pis/payment"
-            fun getPaymentStatus(paymentId: String) = "/pis/payment/$paymentId/status"
-            fun initiatePaymentRefund(paymentId: String) = "/pis/payment/$paymentId/refunds"
+            fun initiatePayment() = "pis/payment"
+            fun getPaymentStatus(paymentId: String) = "pis/payment/$paymentId/status"
+            fun initiatePaymentRefund(paymentId: String) = "pis/payment/$paymentId/refunds"
         }
 
         object Auth {
-            fun startAuthentication() = "/auth"
-            fun receiveToken() = "/auth/token"
-            fun receiveTokenContent() = "/auth/token/content"
+            fun startAuthentication() = "auth"
+            fun receiveToken() = "auth/token"
+            fun receiveTokenContent() = "auth/token/content"
         }
 
         object General {
-            fun getSupportedCountries() = "/auth/countries"
-            fun getSupportedBanks() = "/auth/banks"
-            fun getSupportedBank(bankId: String) = "/auth/banks/$bankId"
-            fun getSupportedBankByCardNumberPiece(cardNumberPiece: String) = "/auth/banks/cards/$cardNumberPiece"
-            fun getPaymentMethods() = "/auth/paymentMethods"
-            fun getProjectSettings() = "/auth/project/settings"
+            fun getSupportedCountries() = "auth/countries"
+            fun getSupportedBanks() = "auth/banks"
+            fun getSupportedBank(bankId: String) = "auth/banks/$bankId"
+            fun getSupportedBankByCardNumberPiece(cardNumberPiece: String) = "auth/banks/cards/$cardNumberPiece"
+            fun getPaymentMethods() = "auth/paymentMethods"
+            fun getProjectSettings() = "auth/project/settings"
         }
 
         object Account {
-            fun getAccountsList() = "/ais/accounts"
-            fun getAccountDetails(accountId: String) = "/ais/accounts/$accountId"
-            fun getAccountTransactions(accountId: String) = "/ais/accounts/$accountId/transactions"
-            fun getAccountBalance(accountId: String) = "/ais/accounts/$accountId/balance"
+            fun getAccountsList() = "ais/accounts"
+            fun getAccountDetails(accountId: String) = "ais/accounts/$accountId"
+            fun getAccountTransactions(accountId: String) = "ais/accounts/$accountId/transactions"
+            fun getAccountBalance(accountId: String) = "ais/accounts/$accountId/balance"
         }
     }
 }

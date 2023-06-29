@@ -37,13 +37,7 @@ class Client internal constructor(
 
     private fun HttpClient.withAuthorization() = this.config {
         defaultRequest {
-            url.takeFrom(
-                URLBuilder().takeFrom(
-                    URI.create("$apiUrl/").resolve(".${Endpoint.VERSION}")
-                ).apply {
-                    encodedPath += url.encodedPath
-                }
-            )
+            url.takeFrom(URI.create("$apiUrl/").resolve(".${Endpoint.VERSION}/"))
             header("Client-Id", authorization.clientId)
             header("Client-Secret", authorization.clientSecret)
             customHeaders.forEach { header(it.key, it.value) }
