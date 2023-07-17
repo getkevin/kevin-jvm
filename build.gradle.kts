@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "eu.kevin"
-version = "1.0.1"
+version = "1.0.2"
 
 repositories {
     mavenCentral()

@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetPaymentStatusResponseError(
-    val code: ErrorCode
+    val code: List<ErrorCode>
 )
